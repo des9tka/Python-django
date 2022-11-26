@@ -1,36 +1,56 @@
+import json
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-users = [
-    {"name":"Max", "age":15},
-    {"name":"Oleg", "age":35},
-    {"name":"Vanya", "age":20},
-    {"name":"Kira", "age":30},
-    {"name":"Andrey", "age":25}
-]
+import users
 
-class UserListView(APIView):
-    def get(self, *args, **kwargs):
-        return Response(users)
 
-    def post(self, *args, **kwargs):
-        new_user = self.request.data
-        users.append(new_user)
-        return Response(new_user)
+class FileReadWriteService:
+    _file_name = None
 
-class UserRetrieveUpdateDeleteView(APIView):
-    def get(self, *args, **kwargs):
-        pk = kwargs.get('pk')
+    @classmethod
+    def get_users(cls):
         try:
-            user = users[pk]
+            with open(cls._file_name) as file:
+                print(json.load(file))
+                return json.load(file)
         except (Exception,):
-            return Response('not found')
-        return Response(user)
+            return []
 
-    def patch(self, *args, **kwargs):
-        new_user = self.request.data
-        pk = kwargs.get('pk')
+    @classmethod
+    def add_user(cls, data):
         try:
-            user = users[pk]
-        except (Exception, ):
-            return Response('not found user')
+            with open(cls._file_name, mode='w') as file:
+                json.dump(data, file)
+        except Exception as err:
+            str(err)
+
+
+class CustomAPIView(APIView, FileReadWriteService):
+    _file_name = 'users.json'
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.users = self.get_users()
+
+
+class UsersReadWriteView(CustomAPIView):
+    def get(self, *args, **kwargs):
+        return Response(self.users)
+
+    def put(self, *args, **kwargs):
+        data = self.request.data
+        data['id'] = self.users[-1]['id']+1 if self.users else 1
+        self.add_user(self.users)
+        return Response(data)
+
+
+
+
+
+
+
+
+
