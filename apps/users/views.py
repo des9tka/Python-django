@@ -24,11 +24,62 @@ class CarView(APIView):
 
 class CarRetrieveUpdateDestroyView(APIView):
 
-    def det_bu_id(self, pk):
-
-
     def get(self, *args, **kwargs):
         pk = kwargs['pk']
+        exist = CarModel.objects.filter(pk=pk).exists()
+
+        if not exist:
+            return Response('Not found', status.HTTP_400_BAD_REQUEST)
+
         get = CarModel.objects.get(pk=pk)
         serializer = CarsSerializer(instance=get)
         return Response(serializer.data, status.HTTP_200_OK)
+
+    def put(self, *args, **kwargs):
+        pk = kwargs['pk']
+        data = self.request.data
+        exist = CarModel.objects.filter(pk=pk).exists()
+
+        if not exist:
+            return Response('Not found', status.HTTP_400_BAD_REQUEST)
+
+        car = CarModel.objects.get(pk=pk)
+        serializer = CarsSerializer(car, data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response(data, status.HTTP_200_OK)
+
+    def patch(self, *args, **kwargs):
+        pk = kwargs['pk']
+        data = self.request.data
+        exist = CarModel.objects.filter(pk=pk).exists()
+
+        if not exist:
+            return Response('Not found', status.HTTP_400_BAD_REQUEST)
+
+        car = CarModel.objects.get(pk=pk)
+        serializer = CarsSerializer(car, data, partial=True)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+        serializer.save()
+        return Response(data, status.HTTP_200_OK)
+
+    def delete(self, *args, **kwargs):
+        pk = kwargs['pk']
+        exist = CarModel.objects.filter(pk=pk).exists()
+
+        if not exist:
+            return Response('Not found', status.HTTP_400_BAD_REQUEST)
+
+        car = CarModel.objects.get(pk=pk)
+        car.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+
