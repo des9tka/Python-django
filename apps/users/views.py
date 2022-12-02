@@ -1,9 +1,9 @@
 from apps.users.serializers import CarsSerializer
 from apps.users.models import CarModel
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView
 
 
-class CarView(ListCreateAPIView):
+class CarView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarsSerializer
 
