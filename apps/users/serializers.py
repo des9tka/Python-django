@@ -7,4 +7,5 @@ class CarsSerializer(ModelSerializer):
 
     class Meta:
         model = CarModel
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('auto_park',)
