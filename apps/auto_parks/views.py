@@ -3,8 +3,8 @@ from rest_framework.response import Response
 
 from .serializers import AutoParksSerializer
 from .models import AutoParksModel
-from apps.users.serializers import CarsSerializer
-from apps.users.models import CarModel
+from apps.cars.serializers import CarsSerializer
+from apps.cars.models import CarModel
 
 
 class AutoParkListCreateView(ListCreateAPIView):

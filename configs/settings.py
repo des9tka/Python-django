@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.staticfiles',
 
-    'apps.users',
+    'apps.cars',
     'apps.auto_parks'
 ]
 

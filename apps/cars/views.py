@@ -1,6 +1,7 @@
-from apps.users.serializers import CarsSerializer
-from apps.users.models import CarModel
-from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+
+from apps.cars.models import CarModel
+from apps.cars.serializers import CarsSerializer
 
 
 class CarView(ListAPIView):

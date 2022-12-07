@@ -5,7 +5,7 @@ from apps.auto_parks.models import AutoParksModel
 
 class CarModel(models.Model):
     class Meta:
-        db_table = 'users'
+        db_table = 'cars'
 
     car_brand = models.CharField(max_length=255)
     year_release = models.IntegerField()
