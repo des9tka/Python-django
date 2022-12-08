@@ -6,7 +6,7 @@ class UserManager(BaseUserManager):
         extra_kwargs['is_active'] = True
 
         if not email:
-            raise Exception('Email is required')
+            raise ValueError('Email is required')
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_kwargs)

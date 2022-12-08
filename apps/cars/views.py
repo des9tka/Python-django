@@ -1,4 +1,5 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarsSerializer
@@ -7,6 +8,11 @@ from apps.cars.serializers import CarsSerializer
 class CarView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarsSerializer
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return AllowAny(),
+        return IsAuthenticated(),
 
     def get_queryset(self):
         query = self.request.query_params.dict()
