@@ -5,6 +5,8 @@ from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
+from apps.auto_parks.serializers import AutoParksSerializer
+
 from .models import UserModel
 from .permissions import IsSuperUser
 from .serializers import UserSerializer
@@ -76,3 +78,23 @@ class AdminToUserView(SuperUserTools):
         serializer = UserSerializer(user)
 
         return Response(serializer.data, status.HTTP_200_OK)
+
+
+class AutoParksListCreateView(GenericAPIView):
+    def get_object(self) -> UserModel:
+        return self.request.user
+
+    def get(self, *args, **kwargs):
+        auto_parks = self.get_object().auto_parks
+        serializer = AutoParksSerializer(auto_parks, many=True)
+        return Response(serializer.data, status.HTTP_200_OK)
+
+    def post(self, *args, **kwargs):
+        data = self.request.data
+        serializer = AutoParksSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        user = self.get_object()
+        serializer.save(user=user)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status.HTTP_200_OK)
+        
