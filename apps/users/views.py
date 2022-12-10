@@ -97,4 +97,6 @@ class AutoParksListCreateView(GenericAPIView):
         serializer.save(user=user)
         serializer = UserSerializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
+
+
         
