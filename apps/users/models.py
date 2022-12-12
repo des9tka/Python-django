@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core import validators as V
 from django.db import models
 
+from .enums import RegEx
 from .managers import UserManager
 
 
@@ -9,7 +11,9 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         db_table = 'auth_user'
 
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=128)
+    password = models.CharField(max_length=20, validators=[
+        V.RegexValidator(RegEx.PASSWORD.pattern, RegEx.PHONE.massage)
+    ])
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -18,4 +22,23 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
 
     objects = UserManager()
+
+class ProfileModel(models.Model):
+    class Meta:
+        db_table = 'profiles'
+
+    name = models.CharField(max_length=20, validators=[
+        V.RegexValidator(RegEx.NAME.pattern, RegEx.NAME.massage)
+    ])
+    surname = models.CharField(max_length=30, validators=[
+        V.RegexValidator(RegEx.SURNAME.pattern, RegEx.SURNAME.massage)
+    ])
+    age = models.IntegerField(validators=[
+        V.MinValueValidator(18), V.MaxValueValidator(150)
+    ])
+    phone = models.IntegerField(validators=[
+        V.RegexValidator(RegEx.PHONE.pattern, RegEx.PHONE.massage)
+    ])
+    avatar = models.ImageField('avatars', blank=True)
+    user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
 

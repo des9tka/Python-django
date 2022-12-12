@@ -1,6 +1,6 @@
+from django.conf.urls.static import static
 from django.urls import include, path
-
-import apps.users.urls
+from configs import settings
 
 urlpatterns = [
     path('cars', include('apps.cars.urls')),
@@ -8,3 +8,5 @@ urlpatterns = [
     path('users', include('apps.users.urls')),
     path('auth', include('apps.auth.urls'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
