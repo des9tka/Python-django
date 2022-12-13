@@ -1,18 +1,24 @@
 from abc import ABC, abstractmethod
 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, GenericAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, UpdateAPIView
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 
 from apps.auto_parks.serializers import AutoParksSerializer
 
 from .models import UserModel
 from .permissions import IsSuperUser
-from .serializers import UserSerializer
+from .serializers import AvatarSerializer, UserSerializer
 
 
 class UserCreateView(CreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+
+
+class UserListView(ListAPIView):
+    queryset = UserModel.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSuperUser,)
 
@@ -96,7 +102,14 @@ class AutoParksListCreateView(GenericAPIView):
         user = self.get_object()
         serializer.save(user=user)
         serializer = UserSerializer(user)
-        return Response(serializer.data, status.HTTP_200_OK)
+        return Response(serializer.data, status.HTTP_201_CREATED)
+
+class AvatarCreateView(UpdateAPIView):
+    serializer_class = AvatarSerializer
+    http_method_names = ('patch',)
+
+    def get_object(self):
+        return self.request.user.profile
 
 
         

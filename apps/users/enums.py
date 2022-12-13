@@ -3,7 +3,7 @@ from enum import Enum
 
 class RegEx(Enum):
     PASSWORD = (
-        r'^(?=.*\d)(?=.*[A-z])(?=.*[a-z])(?=.*[^\d\s]){8,20}$',
+         r'^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\s])[^\s]{8,20}$',
         [
             'password must have one number (0-9)',
             'password must have one upperCase letter',
@@ -14,7 +14,7 @@ class RegEx(Enum):
     )
 
     NAME = (
-        r'^[a-zA-Z]{20}$',
+        r'^[a-zA-Z]{2,20}$',
         [
             'name must contain only letters',
             'min = 2, max = 20'
@@ -22,7 +22,7 @@ class RegEx(Enum):
     )
 
     SURNAME = (
-        r'^[a-zA-Z]{30}$',
+        r'^[a-zA-Z]{2,30}$',
         [
             'surname must contain only letters',
             'min = 2, max = 30'
@@ -30,7 +30,7 @@ class RegEx(Enum):
     )
 
     PHONE = (
-        r'0[9685]\d{8}',
+        r'^0[95687]\d{8}$',
         [
             'invalid phone number',
             'phone number must contain 10 numbers, first - "0"'

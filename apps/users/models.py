@@ -4,6 +4,7 @@ from django.db import models
 
 from .enums import RegEx
 from .managers import UserManager
+from .services import upload_userAvatar
 
 
 class UserModel(AbstractBaseUser, PermissionsMixin):
@@ -11,8 +12,8 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         db_table = 'auth_user'
 
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=20, validators=[
-        V.RegexValidator(RegEx.PASSWORD.pattern, RegEx.PHONE.massage)
+    password = models.CharField(max_length=128, validators=[
+        V.RegexValidator(RegEx.PASSWORD.pattern, RegEx.PASSWORD.massage)
     ])
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -36,9 +37,10 @@ class ProfileModel(models.Model):
     age = models.IntegerField(validators=[
         V.MinValueValidator(18), V.MaxValueValidator(150)
     ])
-    phone = models.IntegerField(validators=[
+    phone = models.CharField(max_length=10, validators=[
         V.RegexValidator(RegEx.PHONE.pattern, RegEx.PHONE.massage)
     ])
-    avatar = models.ImageField('avatars', blank=True)
+
+    avatar = models.ImageField(upload_to=upload_userAvatar, blank=True)
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile')
 
