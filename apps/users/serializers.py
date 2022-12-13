@@ -46,3 +46,5 @@ class AvatarSerializer(ModelSerializer):
     class Meta:
         model = ProfileModel
         fields = ('avatar',)
+
+
