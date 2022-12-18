@@ -8,6 +8,7 @@ djangorestframework-simplejwt = "*"
 response = "*"
 pillow = "*"
 django-dotenv = "*"
+django-filter = "*"
 
 [dev-packages]
 

@@ -15,7 +15,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=128, validators=[
         V.RegexValidator(RegEx.PASSWORD.pattern, RegEx.PASSWORD.massage)
     ])
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)

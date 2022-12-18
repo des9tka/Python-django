@@ -3,6 +3,8 @@ from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateD
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
+from apps.cars.filters import CarFilter
+
 from .models import CarModel
 from .serializers import CarPhotoSerializer, CarsSerializer
 
@@ -10,6 +12,7 @@ from .serializers import CarPhotoSerializer, CarsSerializer
 class CarView(ListAPIView):
     queryset = CarModel.objects.all()
     serializer_class = CarsSerializer
+    filterset_class = CarFilter
 
     def get_permissions(self):
         if self.request.method == 'GET':

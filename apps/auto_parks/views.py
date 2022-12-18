@@ -1,3 +1,5 @@
+from core.pagination.page_pagination import PagePagination
+
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 
@@ -11,6 +13,7 @@ from .serializers import AutoParksSerializer
 class AutoParkListCreateView(ListCreateAPIView):
     queryset = AutoParksModel.objects.all()
     serializer_class = AutoParksSerializer
+    pagination_class = PagePagination
 
 
 class CarListCreateView(GenericAPIView):
