@@ -10,4 +10,5 @@ class AutoParksSerializer(ModelSerializer):
 
     class Meta:
         model = AutoParksModel
-        fields = ('id', 'name', 'cars')
+        fields = ('id', 'name', 'cars', 'users')
+        depth = 1

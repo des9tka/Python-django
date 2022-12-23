@@ -6,6 +6,7 @@ from apps.users.models import UserModel
 class AutoParksModel(models.Model):
     class Meta:
         db_table = 'auto_parks'
+        ordering = ['id']
 
     name = models.CharField(max_length=20)
     users = models.ManyToManyField(UserModel, through='UsersAutoParksModel', related_name='auto_parks')

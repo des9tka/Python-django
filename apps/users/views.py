@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, ListAPIView, UpdateAPIView, ListCreateAPIView
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
-
+from apps.auto_parks.models import AutoParksModel
 from apps.auto_parks.serializers import AutoParksSerializer
 
 from .models import UserModel
@@ -12,8 +12,9 @@ from .permissions import IsSuperUser
 from .serializers import AvatarSerializer, UserSerializer
 
 
-class UserCreateView(CreateAPIView):
+class UserCreateView(ListCreateAPIView):
     serializer_class = UserSerializer
+    queryset = UserModel.objects.all()
     permission_classes = (AllowAny,)
 
 
@@ -100,7 +101,8 @@ class AutoParksListCreateView(GenericAPIView):
         serializer = AutoParksSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         user = self.get_object()
-        serializer.save(user=user)
+        auto_park: AutoParksModel = serializer.save()
+        auto_park.users.add(user)
         serializer = UserSerializer(user)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
