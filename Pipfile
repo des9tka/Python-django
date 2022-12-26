@@ -5,9 +5,10 @@ name = "pypi"
 
 [packages]
 djangorestframework-simplejwt = "*"
-response = "*"
 pillow = "*"
 django-filter = "*"
+djangorestframework = "*"
+mysqlclient = "*"
 
 [dev-packages]
 

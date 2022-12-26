@@ -1,6 +1,3 @@
-from backend.core.services.email_service import EmailService
-from backend.core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
-
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
@@ -9,6 +6,9 @@ from rest_framework.response import Response
 from apps.users.models import UserModel
 
 from .serializers import EmailSerializer, PasswordSerializer
+
+from core.services.email_service import EmailService
+from core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
 
 
 class ActivateUserView(GenericAPIView):

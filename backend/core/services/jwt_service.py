@@ -1,9 +1,9 @@
 from rest_framework_simplejwt.tokens import BlacklistMixin, Token
-from backend.core.enums.action_enum import ActionEnum
+from core.enums.action_enum import ActionEnum
 from typing import Type
-from backend.core.exceptions.jwt_exceptions import JWTException
+from core.exceptions.jwt_exceptions import JWTException
 from rest_framework.generics import get_object_or_404
-from backend.apps.users.models import UserModel
+from apps.users.models import UserModel
 
 TokenClass = Type[BlacklistMixin | Token]
 

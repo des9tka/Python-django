@@ -1,4 +1,4 @@
-from backend.core.services.email_service import EmailService
+from core.services.email_service import EmailService
 
 from typing import Type
 

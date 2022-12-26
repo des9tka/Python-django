@@ -1,6 +1,6 @@
 from django.urls import path
 
-from backend.apps.cars.views import AddCarPhotoView, CarRetrieveUpdateDestroyView, CarView
+from apps.cars.views import AddCarPhotoView, CarRetrieveUpdateDestroyView, CarView
 
 urlpatterns = [
     path('', CarView.as_view()),

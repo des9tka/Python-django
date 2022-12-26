@@ -1,5 +1,5 @@
-from backend.core.enums.error_enums import ErrorEnum
-from backend.core.exceptions.jwt_exceptions import JWTException
+from core.enums.error_enums import ErrorEnum
+from core.exceptions.jwt_exceptions import JWTException
 
 from rest_framework.response import Response
 from rest_framework.views import exception_handler

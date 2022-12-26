@@ -1,4 +1,4 @@
-from backend.core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
+from core.services.jwt_service import ActivateToken, JWTService, RecoveryToken
 
 import os
 

@@ -1,4 +1,4 @@
-from backend.core.pagination.page_pagination import PagePagination
+from core.pagination.page_pagination import PagePagination
 
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
 from rest_framework.response import Response
