@@ -4,11 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-djangorestframework-simplejwt = "*"
+djangorestframework-simplejwt = "3.13.1"
 pillow = "*"
 django-filter = "*"
 djangorestframework = "*"
 mysqlclient = "*"
+drf-yasg = "*"
+celery = {extras = ["redis"], version = "*"}
+django-celery-beat = "*"
 
 [dev-packages]
 

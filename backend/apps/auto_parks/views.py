@@ -1,6 +1,5 @@
-from core.pagination.page_pagination import PagePagination
-
 from rest_framework.generics import GenericAPIView, ListCreateAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.cars.models import CarModel
@@ -9,11 +8,14 @@ from apps.cars.serializers import CarsSerializer
 from .models import AutoParksModel
 from .serializers import AutoParksSerializer
 
+from core.pagination.page_pagination import PagePagination
+
 
 class AutoParkListCreateView(ListCreateAPIView):
     queryset = AutoParksModel.objects.all()
     serializer_class = AutoParksSerializer
     pagination_class = PagePagination
+    permission_classes = (AllowAny,)
 
 
 class CarListCreateView(GenericAPIView):

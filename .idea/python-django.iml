@@ -28,7 +28,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/backend/tamplates" />
+        <option value="$MODULE_DIR$/backend/templates" />
       </list>
     </option>
   </component>
